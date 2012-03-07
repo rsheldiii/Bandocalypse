@@ -9,6 +9,7 @@ urlpatterns = patterns('',
     url(r'^polls/(?P<poll_id>\d+)/$', 'polls.views.detail'),
     url(r'^polls/(?P<poll_id>\d+)/results/$','polls.views.results'),
     url(r'^polls/(?P<poll_id>\d+)/vote/$','polls.views.vote'),
+    url(r'^polls/(?P<artist>[A-Za-z\ ]+)/$','polls.views.artist_bio'),
     # Examples:
     #url(r'^$', 'Bandocalypse.views.home', name='home'),
     # url(r'^Bandocalypse/', include('Bandocalypse.foo.urls')),
