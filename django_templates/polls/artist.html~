@@ -1,0 +1,8 @@
+<h1>artist finder</h1>
+
+<form action="/polls/{{ artist }}" method="post">
+{% csrf_token %}
+<p>enter your artist:</p>
+    <input type="text" name="artist" id="artist" />
+<input type="submit" value="Vote" />
+</form> 

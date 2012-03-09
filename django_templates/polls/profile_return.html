@@ -1,0 +1,14 @@
+{% csrf_token %}
+{% if bands %}
+    <ul>
+    {% for band in bands %}
+        <li>{{band}}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No bands are available.</p>
+{% endif %}
+
+
+
+

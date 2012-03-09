@@ -1,0 +1,4 @@
+{% if profile %}
+    <p>{{profile.name}} likes {{profile.bands}}</p>
+
+{% endif %}

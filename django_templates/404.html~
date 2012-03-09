@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<head>
+<title>
+404 - file missing or not found
+</title>
+
+<style type="text/css">
+h1{
+text-align:center;
+
+
+float:middle;
+border: 5px ridge gray;
+}
+
+p{text-align:center;}
+</style>
+</head>
+
+<body>
+
+<h1>404</h1>
+<p>page not found, please contact the site administrator</p>

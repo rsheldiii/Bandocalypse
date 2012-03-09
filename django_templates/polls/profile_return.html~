@@ -1,0 +1,14 @@
+{% csrf_token %}
+{% if bands %}
+    <ul>
+    {% for band in bands %}
+        <li>{{band.get_bio_summary()}}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No bands are available.</p>
+{% endif %}
+
+
+
+
