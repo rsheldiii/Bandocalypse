@@ -1,6 +1,6 @@
 # Django settings for Bandocalypse project.
 
-DEBUG = True
+DEBUG = True 
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
