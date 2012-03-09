@@ -2,7 +2,9 @@
 {% if bands %}
     <ul>
     {% for band in bands %}
+        {% autoescape off %}
         <li>{{band}}</li>
+        {% endautoescape %}
     {% endfor %}
     </ul>
 {% else %}

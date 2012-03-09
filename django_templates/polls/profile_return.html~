@@ -2,7 +2,9 @@
 {% if bands %}
     <ul>
     {% for band in bands %}
-        <li>{{band.get_bio_summary()}}</li>
+        {% autoescape off %}
+        <li>{{band}}</li>
+        {% endautoescape %}
     {% endfor %}
     </ul>
 {% else %}
