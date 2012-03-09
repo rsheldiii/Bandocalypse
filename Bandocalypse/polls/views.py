@@ -23,6 +23,9 @@ def results(request, poll_id):
 def vote(request, poll_id):
     return HttpResponse("You're voting on poll %s." % poll_id)
 
+def info(request):
+    return render_to_response('polls/info.html',{})
+
 def artist(request):
     # You have to have your own unique two values for API_KEY and API_SECRET
     # Obtain yours from http://www.last.fm/api/account for Last.fm
