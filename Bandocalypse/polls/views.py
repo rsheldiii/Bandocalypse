@@ -74,7 +74,7 @@ def profile_return(request):
 
     network = pylast.LastFMNetwork(api_key = API_KEY, api_secret = API_SECRET)
 
-    bands_objects = []
+    bands_objects = {}
     for i in bands:
-        bands_objects.append(network.get_artist(i).get_bio_summary())
+        bands_objects[i] = network.get_artist(i).get_bio_summary()
     return render_to_response('polls/profile_return.html',{'bands': bands_objects},context_instance=RequestContext(request))

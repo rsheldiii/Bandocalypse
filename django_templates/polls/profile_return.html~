@@ -1,9 +1,9 @@
 {% csrf_token %}
 {% if bands %}
     <ul>
-    {% for band in bands %}
+    {% for band,description in bands.iteritems %}
         {% autoescape off %}
-        <li>{{band}}</li>
+        <li><h3>{{band}} :</h3> {{description}}</li>
         {% endautoescape %}
     {% endfor %}
     </ul>
