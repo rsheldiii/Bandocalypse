@@ -5,6 +5,8 @@ from polls.models import Poll,Profile
 import pylast
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
+from django.contrib import messages
+
 
 def index(request):
     latest_poll_list = Poll.objects.all().order_by('-pub_date')[:5]
@@ -49,7 +51,11 @@ def profile_create(request):
 
 
 def profile_login(request):
-    p = Profile.objects.get(name = request.POST["name"], password = request.POST["password"])
+    try :
+        p = Profile.objects.get(name = request.POST["name"], password = request.POST["password"])
+    except:
+        messages.add_message(request, messages.ERROR, 'ERROR: user not found. please try to login again')
+        return HttpResponseRedirect(reverse('polls.views.login_or_create'))
     request.session['profile_id'] = p.id
     return HttpResponseRedirect(reverse('polls.views.profile_return'))
 
