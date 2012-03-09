@@ -20,3 +20,10 @@ class Choice(models.Model):
     votes = models.IntegerField()
     def __unicode__(self):
         return self.choice
+
+class Profile(models.Model):
+    name = models.CharField(max_length=32)
+    password = models.CharField(max_length = 32)
+    bands = models.CharField(max_length =512)
+    def __unicode__(self):
+        return self.name + " : " + self.bands
