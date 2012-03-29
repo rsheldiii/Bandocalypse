@@ -24,6 +24,6 @@ class Choice(models.Model):
 class Profile(models.Model):
     name = models.CharField(max_length=32)
     password = models.CharField(max_length = 32)
-    bands = models.CharField(max_length =512)
+    bands = models.CharField(max_length =5120)
     def __unicode__(self):
         return self.name + " : " + self.bands
