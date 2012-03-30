@@ -13,4 +13,5 @@ urlpatterns = patterns('polls.views',
     url(r'^accounts/profile/$','profile_return'),
     url(r'^edit/$', 'edit'),
     url(r'^info/$', 'info'),
+    url(r'^event/$', 'event'),
 )

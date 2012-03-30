@@ -9,5 +9,5 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$','polls.views.login_or_create'),
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
-                 {'document_root': settings.MEDIA_ROOT}),
+                 {'document_root': MEDIA_ROOT}),
 )

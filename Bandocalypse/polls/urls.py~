@@ -9,8 +9,9 @@ urlpatterns = patterns('polls.views',
     url(r'^artist$','artist'),
     url(r'^profile_login/$','profile_login'),
     url(r'^profile_create/$','profile_create'),
-    url(r'^accounts/login/$', 'login'),
+    url(r'^accounts/login/$', login),
     url(r'^accounts/profile/$','profile_return'),
     url(r'^edit/$', 'edit'),
     url(r'^info/$', 'info'),
+    url(r'^event/$', 'event')
 )

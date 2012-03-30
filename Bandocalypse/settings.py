@@ -7,6 +7,10 @@ ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
 
+AUTH_PROFILE_MODULE = 'polls.Profile'
+# there are LOGIN_URL and LOGIN_REDIRECT_URL you can use to specify default login page and the page the login page goes to after you log in
+LOGIN_URL = 'polls/accounts/login'
+LOGIN_REDIRECT_URL = '/polls/accounts/profile/'
 MANAGERS = ADMINS
 
 DATABASES = {

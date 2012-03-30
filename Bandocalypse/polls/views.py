@@ -24,7 +24,8 @@ def profile_create(request):
     profile = user.get_profile()
     profile.bands = request.POST['bands']
     profile.save()
-    return HttpResponseRedirect(reverse('django.contrib.auth.views.login'))
+    return profile_login(request)
+    #return HttpResponseRedirect(reverse('django.contrib.auth.views.login'))
 
 
 def profile_login(request):
@@ -41,6 +42,13 @@ def profile_login(request):
     else:
         messages.add_message(request, messages.ERROR, 'no such account. please try again')
         return render_to_response('polls/login_or_create.html',context_instance=RequestContext(request))
+
+
+def event(request):
+	#currently only gives you the first event from the worcester page
+	place = "Worcester, MA"	
+
+	return render_to_response('polls/event.html', {'titular' : network.get_geo(place = place).get_upcoming_events()[0].get_title()})
 
     
 
