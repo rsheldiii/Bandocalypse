@@ -27,7 +27,8 @@ width:300px;
 <p>wanna learn about bandocalypse? <a href = "/polls/info">click here!</a></p>
 
 
-<a href = "{% url 'django.contrib.auth.views.login' %}">login!</a>
+<a href = "{% url 'django.contrib.auth.views.login' %}">login!</a><br/>
+<a href = "{% url 'polls.views.event' %}">try out our event searcher!</a>
 
 <p>not a member? signup now!</p>
 <form action="/polls/profile_create/" method="post" id="signup">
