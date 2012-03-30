@@ -8,6 +8,7 @@ urlpatterns = patterns('',
     url(r'^polls/', include('polls.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$','polls.views.home'),
+    url(r'^event/$', 'polls.views.event'),
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
                  {'document_root': MEDIA_ROOT}),
 )

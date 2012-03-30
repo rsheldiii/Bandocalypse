@@ -1,5 +1,5 @@
 <h1>BANDOCALYPSE</h1>
-
+{%load url from future%}
 <style type="text/css">
 #login{
 border:1px solid black;
@@ -26,26 +26,18 @@ width:300px;
 
 <p>wanna learn about bandocalypse? <a href = "/polls/info">click here!</a></p>
 
-<p>please login:</p>
-<form action="/polls/profile_login/" method="post" id="login">
-{% csrf_token %}
-    <p>name:</p>
-    <input type="text" name="name" />
-    <p>password:</p>
-    <input type="text" name="password" />
-<input type="submit" value="login" />
-</form> 
 
-
-
+<a href = "{% url 'django.contrib.auth.views.login' %}">login!</a>
 
 <p>not a member? signup now!</p>
 <form action="/polls/profile_create/" method="post" id="signup">
 {% csrf_token %}
     <p>name:</p>
-    <input type="text" name="name1" id="name1" /><br/>
+    <input type="text" name="name" id="name" /><br/>
+    <p>email:</p>
+    <input type="text" name="email" id="email" /><br/>
     <p>password:</p>
-    <input type="text" name="password1" /><br/>
+    <input type="text" name="password" /><br/>
     <p>comma-delineated list of your favorite bands:</p>
     <input type="text" name="bands" />
 <input type="submit" value="create" />

@@ -1,0 +1,10 @@
+django notes:
+
+signals are a bitch
+the entire view class is loaded into the server when it is used - globals work
+syncdb will not drop and reup a table that changes implementation if you don't change the name (at least sometimes) - operational error or something
+'login' for some reason means something in the view - so watch out, its not django.contrib.auths.views.login
+http://stackoverflow.com/questions/9090748/auth-profile-module-value-in-django-when-the-models-is-not-a-file-but-a-director
+http://stackoverflow.com/questions/8369911/cant-get-profile-from-user-object
+http://django-irc-logs.com/2012/feb/02/
+

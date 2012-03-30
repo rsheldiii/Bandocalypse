@@ -45,10 +45,14 @@ def profile_login(request):
 
 
 def event(request):
-	#currently only gives you the first event from the worcester page
-	place = "Worcester, MA"	
-
-	return render_to_response('polls/event.html', {'titular' : network.get_geo(place = place).get_upcoming_events()[0].get_title()})
+	try:
+		place = request.POST['place']
+		event = network.get_geo(place = place).get_upcoming_events()[0]
+		titular = event.get_title()
+		description = event.get_cover_image()
+		return render_to_response('polls/event.html', {'location' : place,'titular' : titular, 'description' : description },context_instance=RequestContext(request))
+	except:
+		return render_to_response('polls/event.html',context_instance=RequestContext(request))
 
     
 

@@ -1,0 +1,21 @@
+{% if titular and description and location %}
+
+<h1>{{titular}}</h1>
+<img src ={{description}} alt = "venue picture"/>
+
+{% else %}
+
+<p>enter a city down below to get the first event for that city!</p>
+
+{% endif %}
+
+{% load url from future %}
+
+<form action="{% url 'polls.views.event' %}" method="post" id="event">
+{% csrf_token %}
+    <p>location:</p>
+    <input type="text" name="place" id="place" /><br/>   
+<input type="submit" value="search" />
+</form> 
+
+

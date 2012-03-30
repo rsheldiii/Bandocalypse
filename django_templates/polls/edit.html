@@ -10,7 +10,7 @@
 <form action="/polls/edit/" method="post" id="login">
 {% csrf_token %}
     <p>bands:</p>
-    <input type="text" name="bands" value = {{bands}} />
+    <input type="text" name="bands" value = "{{bands}}" />
 
 <input type="submit" value="edit" />
 </form> 

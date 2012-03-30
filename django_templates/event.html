@@ -1,0 +1,18 @@
+
+
+<h1>{%titular%}</h1>
+
+
+</p>enter a city down below to get the first event for that city!</p>
+
+
+{% load url from future %}
+
+<form action="{% url 'event' %}" method="post" id="event">
+{% csrf_token %}
+    <p>location:</p>
+    <input type="text" name="place" id="place" /><br/>   
+<input type="submit" value="search" />
+</form> 
+
+
