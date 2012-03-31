@@ -49,8 +49,10 @@ def event(request):
 		place = request.POST['place']
 		event = network.get_geo(place = place).get_upcoming_events()[0]
 		titular = event.get_title()
-		description = event.get_cover_image()
-		return render_to_response('polls/event.html', {'location' : place,'titular' : titular, 'description' : description },context_instance=RequestContext(request))
+		picture = event.get_cover_image()
+		if picture is None:
+		    picture = "http://www.tiptoptens.com/wp-content/uploads/2011/01/image_not_found.jpg"
+		return render_to_response('polls/event.html', {'location' : place,'titular' : titular, 'picture' : picture },context_instance=RequestContext(request))
 	except:
 		return render_to_response('polls/event.html',context_instance=RequestContext(request))
 
