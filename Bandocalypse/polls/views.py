@@ -43,19 +43,52 @@ def profile_login(request):
         messages.add_message(request, messages.ERROR, 'no such account. please try again')
         return render_to_response('polls/login_or_create.html',context_instance=RequestContext(request))
 
-
+@login_required
 def event(request):
-	try:
-		place = request.POST['place']
-		event = network.get_geo(place = place).get_upcoming_events()[0]
-		titular = event.get_title()
-		picture = event.get_cover_image()
-		if picture is None:
-		    picture = "http://www.tiptoptens.com/wp-content/uploads/2011/01/image_not_found.jpg"
-		return render_to_response('polls/event.html', {'location' : place,'titular' : titular, 'picture' : picture },context_instance=RequestContext(request))
-	except:
-		return render_to_response('polls/event.html',context_instance=RequestContext(request))
+    try:
+        request.session['bands']
+        print "got the bands from the session: " + str(request.session['bands'])
+    except:
+        request.session['bands'] = request.user.get_profile().bands.split(',')
+        print "had to generate the bands. Hopefully it worked here they are" + str(request.session['bands'])
 
+
+    print "between tries"
+
+    try:
+        print "Flibbergibbet"
+        place = request.POST['place']
+        if place:
+            print "PLACE WHAT NOW"
+        geo = network.get_geo(place = place)
+        events = geo.get_upcoming_events()
+        
+    except:
+        return render_to_response('polls/event.html',context_instance=RequestContext(request))
+        
+    useful_events = []
+    for event in events:
+        b3 = []
+        bands = request.session['bands']
+        for artist in event.get_artists():
+            artist = str(artist)
+            print "your mother"
+            #
+            #
+            #NOTE: THIS WILL PROBABLY NOT WORK IF THERE IS SOMETHING THAT IS NOT EXPRESSABLE IN ASCII INVOLVED. FIND A SOLUTION.
+            #
+            #
+            if bands.count(artist):
+                print "your father"
+                b3.append(artist)
+            #b3 = [str(artist) for str(artist) in event.get_artists() if str(artist) in request.session['bands']]
+        print "We got out of the loop."
+        if b3 != []:
+            useful_events.append([event.get_artists(),event.get_title()])
+        print "We got to the end of the loop succesfully."        
+    print "we should execute successfully"
+    return render_to_response('polls/event.html', { 'events' : useful_events },context_instance=RequestContext(request))
+        
     
 
 
