@@ -62,7 +62,6 @@ def profile_login(request):
 
 
 def event(request,format):
-    print format + "asdasd"
     #profile
     profile = None
     try:
@@ -261,7 +260,7 @@ def get_bands(request):
             print band#because I can
             bands_objects[bandname] = band[0].bio#because there should be only one band
             if (datetime.datetime.now() - band[0].last_updated).days > 0:#if the information is old
-                bio = network.get_artist(i).get_bio_summary()#get new information
+                bio = network.get_artist(bandname).get_bio_summary()#get new information
                 band[0].bio = bio
                 band[0].last_updated = datetime.datetime.now()
                 band[0].save()
