@@ -1,0 +1,23 @@
+#personalized{
+width:500px;
+text-align:left !important;
+-webkit-box-shadow: rgba(0,0,0,0.3) 0px 10px 10px;
+  -moz-box-shadow: rgba(0,0,0,0.3) 0px 10px 10px;
+  box-shadow: rgba(0,0,0,0.3) 0px 10px 10px;
+}
+
+#all{
+width:500px;
+text-align:left !important;
+-webkit-box-shadow: rgba(0,0,0,0.3) 0px 10px 10px;
+  -moz-box-shadow: rgba(0,0,0,0.3) 0px 10px 10px;
+  box-shadow: rgba(0,0,0,0.3) 0px 10px 10px;
+}
+
+#profile{
+width:200px
+}
+
+#search{
+width:400px;
+}

@@ -1,0 +1,12 @@
+<form action="/polls/profile_create/" method="post" id="signup">
+{% csrf_token %}
+    <p>name:</p>
+    <input type="text" name="name" id="name" /><br/>
+    <p>email:</p>
+    <input type="text" name="email" id="email" /><br/>
+    <p>password:</p>
+    <input type="text" name="password" /><br/>
+    <p>comma-delineated list of your favorite bands:</p>
+    <input type="text" name="bands" />
+<input type="submit" value="create" />
+</form> 

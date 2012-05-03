@@ -1,16 +1,50 @@
-{% csrf_token %}
-{% if bands %}
-    <ul>
-    {% for band,description in bands.iteritems %}
-        {% autoescape off %}
-        <li><h3>{{band}} :</h3> {{description}}</li>
-        {% endautoescape %}
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No bands are available.</p>
-{% endif %}
+<div id = "wrapper">
+
+    <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}main.css" />
+    <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}profile.css" />
+
+    {% if error_message %}<div class = "error"><p><strong>{{ error_message }}</strong></p></div>{% endif %}
+
+    <div class = "info" id = "title"><h1>BANDOCALYPSE</h1></div><br/>
 
 
 
-<a href = "/polls/edit">edit your bands!</a>
+    <div class = "cluster" id = "clusterprofile">
+
+        <div class = "info" id = "event">
+            <a href = "{% url polls.views.event %}">your event searcher awaits!</a>
+        </div>
+
+        <br/>
+
+        {% csrf_token %}
+        {% if bands %}
+            <div class = "info" id = "bands">
+                <ul>
+                {% for band,description in bands.iteritems %}
+                   {% autoescape off %}
+                    <li><h3>{{band}} :</h3> <div class = "description">{{description}}</div></li>
+                    {% endautoescape %}
+                {% endfor %}
+                </ul>
+            </div>
+        {% else %}
+        <div class = "error" id = "nobands">
+            <p>No bands are available.</p>
+        </div>
+        {% endif %}
+        <br/>
+
+        {% if hometown %}
+        <div class = "info" id = "hometown">
+            <p> your hometown is {{hometown}}</p>
+        </div>
+        {% endif %}
+        <br/>
+
+
+        <div class = "info" id = "profile">
+            <a href = "/polls/edit">edit your profile!</a>
+        </div>
+    </div>
+</div>

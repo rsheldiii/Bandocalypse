@@ -1,0 +1,35 @@
+<h1>BANDOCALYPSE</h1>
+{%load url from future%}
+<style type="text/css">
+#login{
+border:1px solid black;
+width:300px;
+}
+#signup{
+border:1px solid black;
+width:300px;
+}
+</style>
+
+
+<img src="{{MEDIA_URL}}apocalypse.jpg" />
+
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+
+<p>wanna learn about bandocalypse? <a href = "/polls/info">click here!</a></p>
+
+
+<a href = "{% url 'django.contrib.auth.views.login' %}">login!</a>
+<a href = "{% url 'polls.views.event' %}">try out our event searcher!</a>
+
+<a href = "{% url 'polls.views.' %}">not a member? signup now!</p>
+
+

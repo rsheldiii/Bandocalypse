@@ -1,6 +1,8 @@
 <h1>{{ poll.question }}</h1>
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% if error_message %}<div class = "error" id = "error"><p><strong>{{ error_message }}</strong></p></div>{% endif %}
+
+<a href = "{% url 'polls.views.event' %}">your event searcher awaits!</a>
 
 <form action="/polls/{{ poll.id }}/vote/" method="post">
 {% csrf_token %}

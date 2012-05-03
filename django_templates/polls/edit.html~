@@ -1,17 +1,62 @@
+<div id = "wrapper">
+<div class = "info" id = "title"><h1>BANDOCALYPSE</h1></div><br/>
+<link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}main.css" />
+<link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}edit.css" />
+
 {% if messages %}
+<div class = "error">
 <ul class="messages">
     {% for message in messages %}
     <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
     {% endfor %}
 </ul>
+</div>
 {% endif %}
 
+<div class = "info" id = "bands">
+<p>your bands currently are:</p>
+<ul>
+{% for band in bands%}
+    <li>{{band}}</li>
+{% endfor %}
+<li><a href = "/polls/remove/All">remove all bands</a></li>
+</ul>
+</div>
 
-<form action="/polls/edit/" method="post" id="login">
+
+<br/>
+<div class = "info" id = "form">
+<form action="/polls/edit/html/" method="post" id="add">
 {% csrf_token %}
-    <p>bands:</p>
-    <input type="text" name="bands" value = {{bands}} />
 
-<input type="submit" value="edit" />
+    <label>hometown:</label><input type="text" name="hometown" value = "{{hometown}}"/>
+    <br/>
+    <label>add:</label>
+    <input type="text" name="addbands" value = "" />
+<br/>
+    <label>remove:</label>
+    <input type="text" name="rembands" value = "" />
+
+<input type="submit" value="update" />
 </form> 
-    
+</div>
+
+<br/>
+
+
+ <div class = "info" id = "profile">
+<a href = "/polls/accounts/profile">back to your profile</a>
+</div>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+</div>

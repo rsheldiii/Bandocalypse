@@ -1,0 +1,28 @@
+div#bands{
+
+width:500px;
+text-align: left !important;
+}
+div#hometown{
+
+width:500px;
+
+}
+div#profile{
+width:200px
+
+}
+
+div.description{
+border: 1px ridge black;
+}
+
+div#event{
+width:300px;
+}
+
+div#clusterprofile{
+
+padding:10px;
+
+}

@@ -25,8 +25,23 @@ class Choice(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User)
-    bands = models.CharField(max_length =5120, default = '')
-
+    hometown = models.CharField(max_length=200)
+    bands = models.TextField()
+    
+class Band(models.Model):
+    name = models.CharField(max_length=200)#no support for unique keys, coolio. could do database of band names and band profiles but still 
+    bio = models.TextField()
+    last_updated = models.DateTimeField()
+    def __unicode__(self):
+        return self.name + ":" + self.bio
+"""
+class Event(models.Model):
+    name = models.CharField(max_length=200)
+    bands = models.TextField()
+    date = models.DateField()
+    def __unicode__(self):
+        return self.name + ":" + self.bio
+"""
 
 def create_user_profile(sender, instance, created, **kwargs):
     if created:

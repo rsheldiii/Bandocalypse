@@ -1,22 +1,50 @@
-{% if titular %}
-<p>event for {{location}}:</p>
-<h1>{{titular}}</h1>
+<div id = "wrapper">
 
-<img src ={{picture}} alt = "venue picture"/>
+<div class = "info" id = "title"><h1>BANDOCALYPSE</h1></div><br/>
+<link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}event.css" />
+<link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}main.css" />
 
-{% else %}
-
-<p>enter a city down below to get the first event for that city!</p>
-
+<div class = "cluster">
+<br/>
+{% if events %}
+    <div class = "info" id = "personalized">
+    <p>your personalized events:</p>
+    <ol>
+    {% for artists,title in events %}
+        <li>"{{title}}" featuring {{ artists }}</li>
+    {% endfor %}
+    </ol>
+    </div>
 {% endif %}
 
-{% load url from future %}
+<br/>
 
-<form action="{% url 'polls.views.event' %}" method="post" id="event">
+{% if all_events %}
+    <div class = "info" id = "all">
+    <p>all events:</p>
+    <ol>
+    {% for artists,title in all_events %}
+        <li>"{{title}}" featuring {{ artists }}</li>
+    {% endfor %}
+    </ol>
+    </div>
+{% endif %}
+<br/>
+
+<div class = "error" id = "search">
+<p>care to search another place?</p>
+<form action="/event/html/" method="post" id="event">
 {% csrf_token %}
     <p>location:</p>
     <input type="text" name="place" id="place" /><br/>   
 <input type="submit" value="search" />
 </form> 
+</div>
 
-
+<br/>
+</div>
+<br/>
+<div class = "info" id = "profile">
+<a href = "/polls/accounts/profile/">your profile</a>
+</div>
+</div>

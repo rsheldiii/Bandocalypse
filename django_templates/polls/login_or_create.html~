@@ -1,46 +1,47 @@
-<h1>BANDOCALYPSE</h1>
+<div id = "wrapper">
+<div class = "info" id = "title"><h1>BANDOCALYPSE</h1></div><br/>
 {%load url from future%}
-<style type="text/css">
-#login{
-border:1px solid black;
-width:300px;
-}
-#signup{
-border:1px solid black;
-width:300px;
-}
-</style>
 
+<link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}main.css" />
+<link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}login.css" />
 
-<img src="{{MEDIA_URL}}apocalypse.jpg" />
 
 
 {% if messages %}
+<div class = "error" id = "error">
 <ul class="messages">
     {% for message in messages %}
     <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
     {% endfor %}
 </ul>
+</div>
 {% endif %}
 
+{%if False%}
+<img src="{{MEDIA_URL}}apocalypse.jpg" />
 
+<p>{{STATIC_URL}}</p>
+{%endif%}
+
+<div class = "error" id = "info">
 <p>wanna learn about bandocalypse? <a href = "/polls/info">click here!</a></p>
+</div><br/>
 
 
-<a href = "{% url 'django.contrib.auth.views.login' %}">login!</a>
-<a href = "{% url 'polls.views.event' %}">try out our event searcher!</a>
+{%if success%}
+    <div class = "info" id = "homepage">
+    <a href = "{% url 'polls.views.event' %}">your home page, {{username}}!</a>
+    </div>
+    <br/>
+{%else%}
+    <div class = "info" id = "login">
+    <a href = "{% url 'django.contrib.auth.views.login' %}">login!</a></div>
+    <br/>
+    
+    <div class = "info" id = "register">
+    <a href = "{% url 'polls.views.profile_create' %}">not a member? signup now!</p>
+    </div>
+{%endif%}
 
-<p>not a member? signup now!</p>
-<form action="/polls/profile_create/" method="post" id="signup">
-{% csrf_token %}
-    <p>name:</p>
-    <input type="text" name="name" id="name" /><br/>
-    <p>email:</p>
-    <input type="text" name="email" id="email" /><br/>
-    <p>password:</p>
-    <input type="text" name="password" /><br/>
-    <p>comma-delineated list of your favorite bands:</p>
-    <input type="text" name="bands" />
-<input type="submit" value="create" />
-</form> 
 
+</div>

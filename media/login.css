@@ -1,0 +1,12 @@
+#login{width:100px;}
+#register{width:200px;}
+#homepage{width:200px;}
+#info{width:200px;}
+
+#name{
+
+-webkit-box-shadow: rgba(0,0,0,0.5) 0px 3px 10px;
+  -moz-box-shadow: rgba(0,0,0,0.5) 0px 10px 10px;
+  box-shadow: rgba(0,0,0,0.5) 0px 10px 10px;
+
+}
