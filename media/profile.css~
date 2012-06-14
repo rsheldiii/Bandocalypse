@@ -14,7 +14,7 @@ width:200px
 }
 
 div.description{
-border: 3px ridge black;
+border: 1px ridge black;
 }
 
 div#event{

@@ -1,5 +1,16 @@
 <div id = "wrapper">
-
+    <script src="{{MEDIA_URL}}jquery-1.7.2.min.js"></script>
+    
+    <script type = "text/javascript">
+    
+    $(document).ready(function(){
+        $('#bands').hide();
+        $('#bands').fadeIn('slow');
+        $('#hometown').hide();
+        $('#hometown').fadeIn('slow');
+    });
+    
+    </script>
     <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}main.css" />
     <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}profile.css" />
 
@@ -10,7 +21,7 @@
 
 
     <div class = "cluster" id = "clusterprofile">
-
+    <br/>
         <div class = "info" id = "event">
             <a href = "{% url polls.views.event %}">your event searcher awaits!</a>
         </div>
@@ -37,13 +48,13 @@
 
         {% if hometown %}
         <div class = "info" id = "hometown">
-            <p> your hometown is {{hometown}}</p>
+            <h3> your hometown is {{hometown}}</h3>
         </div>
         {% endif %}
         <br/>
 
 
-        <div class = "info" id = "profile">
+        <div class = "button" id = "button">
             <a href = "/polls/edit">edit your profile!</a>
         </div>
     </div>

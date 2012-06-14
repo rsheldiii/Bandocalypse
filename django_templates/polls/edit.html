@@ -3,6 +3,18 @@
 <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}main.css" />
 <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}edit.css" />
 
+    <script src="{{MEDIA_URL}}jquery-1.7.2.min.js"></script>
+    
+    <script type = "text/javascript">
+    
+    $(document).ready(function(){
+        $('#bands').fadeTo(1,0.01);
+        $('#bands').fadeTo(1000,.8);
+    });
+    </script>
+
+
+<div class = "cluster">
 {% if messages %}
 <div class = "error">
 <ul class="messages">
@@ -41,10 +53,10 @@
 </form> 
 </div>
 
+</div>
 <br/>
 
-
- <div class = "info" id = "profile">
+ <div class = "button" id = "button">
 <a href = "/polls/accounts/profile">back to your profile</a>
 </div>
 <br/>

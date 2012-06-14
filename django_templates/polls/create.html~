@@ -4,7 +4,7 @@
 <div id = "wrapper">
 <div class = "cluster" id = cluster">
 
-<div class = "info">
+
 <form action="/polls/profile_create/" method="post" id="signup">
 {% csrf_token %}
     <p>name:</p>
@@ -19,7 +19,7 @@
     <input type="text" name="bands" />
 <input type="submit" value="create" />
 </form>
-</div>
+
  
 </div>
 </div>

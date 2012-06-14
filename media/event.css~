@@ -7,7 +7,7 @@ text-align:left !important;
 }
 
 #all{
-width:500px;
+width:5000px;
 text-align:left !important;
 -webkit-box-shadow: rgba(0,0,0,0.3) 0px 10px 10px;
   -moz-box-shadow: rgba(0,0,0,0.3) 0px 10px 10px;

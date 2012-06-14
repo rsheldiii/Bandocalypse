@@ -37,6 +37,7 @@ def profile_create(request):#when we do this via ajax, the form action will be a
         #artists = artists.join(",")
         #artists = correct_bands(artists)
         profile.bands = artists
+        profile.hometown = request.POST['hometown']
         profile.save()
         return profile_login(request)
     except:
@@ -62,13 +63,26 @@ def profile_login(request):
 
 
 def event(request,format):
+    
+    
     #profile
     profile = None
     try:
         if request.user.is_active:#error on user if no user
             profile = request.user.get_profile()
     except:
-        print "no profile"
+        print "no profile from session"
+        
+    try:
+        username = request.GET['username']
+        password = request.GET['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:#success
+                login(request, user)
+                profile = user.get_profile()
+    except:
+        print "no profile from POST"
         
     if profile and profile.hometown:
             place = str(profile.hometown)
@@ -83,7 +97,7 @@ def event(request,format):
     else:
         request.session['bands'] = request.POST.get('bands',None)
         if request.session['bands'] is None:
-            return HttpResponse("{'error':'no data'}")#exit
+            return HttpResponse("error : no bands")#exit
         
     
     if request.POST.get('place',None):
@@ -96,11 +110,18 @@ def event(request,format):
     #event caching block
     try:
         request.session['events'][place]
-        
-        if request.session['events'][place]['bands'] == request.user.get_profile().bands.split(','):
-            if format == "json":
-                return HttpResponse(json.dumps(request.session['events'][place]))
+        request.session['events'][place]['eventtime'] = request.session.get('eventtime',time.time())#either set or leave alone
+        print request.session['events'][place]['eventtime'] - time.time()
+        if request.session['events'][place]['bands'] == request.user.get_profile().bands.split(',') and ((time.time() - request.session['events'][place]['eventtime']) < 1800) and False:#if we have cache and it ain't too old
+            if format == "mobile":
+                string = ""
+                for event in request.session['events'][place]['useful events']:
+                    string += ";".join(event) + "\n"
+                string = string[:-1]
+                return HttpResponse(string)
             return render_to_response('polls/event.html', { 'events' : request.session['events'][place]['useful events'], 'all_events' : request.session['events'][place]['all events'] },context_instance=RequestContext(request))
+        else:
+            request.session['eventtime'] = time.time()
 
     except:
         print "we continue"
@@ -109,23 +130,24 @@ def event(request,format):
         
         
         
-        
+    events = []
     #geo
     lat = request.session.get('lat',request.POST.get('lat',None))#tries session first, then POST, then sets to None
     lon = request.session.get('lon',request.POST.get('lon',None))
+    try:
+        if place or (lat and lon):#TODO: implement geo
+                print "getting geo"
+                if lat and lon:
+                    geo = network.get_geo(lat = lat, lon = lon)
+                else:
+                    geo = network.get_geo(place = place)
+                events = geo.get_upcoming_events()
+    except:
+        print "geo error"
     
-    if place:#TODO: implement geo
-            print "getting geo"
-            geo = network.get_geo(place = place)
-            events = geo.get_upcoming_events()
-            
-    else:
-        return render_to_response('polls/event.html',context_instance=RequestContext(request))
     
 
     request.session['events'] = request.session.get('events',{})
-
-
 
     #real logic
     request.session['events'][place] = {"all events" : [], "useful events" : []}
@@ -133,9 +155,9 @@ def event(request,format):
     useful_events = request.session['events'][place]["useful events"]
     
     for event in events:
-        all_events.append([",".join([str(artist.get_name()) for artist in event.get_artists()]),str(event.get_title())])
+        all_events.append([",".join([str(artist.get_name()) for artist in event.get_artists()]),event.get_venue().get_name(),event.get_start_date()])
         b3 = []
-        bands = request.session['bands']
+        bands = [band.lower() for band in request.session['bands']]
         print bands
         for artist in event.get_artists():
             artista = artist.get_name()
@@ -145,7 +167,7 @@ def event(request,format):
             #NOTE: THIS WILL PROBABLY NOT WORK IF THERE IS SOMETHING THAT IS NOT EXPRESSABLE IN ASCII INVOLVED. FIND A SOLUTION.
             #
             #
-            if bands.count(artista):
+            if bands.count(artista.lower()):
                 print "your father"
                 b3.append(artist)
             
@@ -157,15 +179,19 @@ def event(request,format):
                 artists.append(artist.get_name())
             
             
-            useful_events.append([",".join(artists),str(event.get_title())])
-            print "here are the stats for the event we are showing: " + str(event.get_title())
+            useful_events.append([",".join([str(artist.get_name()) for artist in event.get_artists()]),event.get_venue().get_name(),event.get_start_date()])#theres a better way to do this
+            print "here are the stats for the event we are showing: " + event.get_title()
             
     request.session.modified = True
     request.session['events'][place]['bands'] = request.session['bands']
     
-    if format == "json":
-        return HttpResponse(json.dumps(request.session['events'][place]))
-    return render_to_response('polls/event.html', { 'events' : useful_events, 'all_events' : all_events },context_instance=RequestContext(request))
+    if format == "mobile":
+        string = ""
+        for event in useful_events:
+            string += ";".join(event) + "\n"
+        string = string[:-1]
+        return HttpResponse(string)
+    return render_to_response('polls/event.html', { 'events' : useful_events, 'all_events' : all_events, 'place' : place },context_instance=RequestContext(request))
         
     
 def home(request):
@@ -175,7 +201,8 @@ def home(request):
         if request.user.is_active:#success
             success = True
             username = request.user.username
-    return render_to_response('polls/login_or_create.html',{'success' : success, 'username' : username},context_instance=RequestContext(request))
+            return render_to_response('polls/login_or_create.html',{'success' : success, 'username' : username},context_instance=RequestContext(request))
+    return render_to_response('polls/login_or_create.html',context_instance=RequestContext(request))
 
 @login_required
 def edit(request):
@@ -249,10 +276,14 @@ def get_bands(request):
         band = Band.objects.filter(name = bandname)#filter our cache to find them!
         if not band:#if they arent in the cache
             try:
-                bands_objects[bandname] = network.get_artist(i).get_bio_summary()#fetch them from the network!
-            except:
+                bands_objects[bandname] = network.get_artist(bandname).get_bio_summary()#fetch them from the network!
+                if bands_objects[bandname] is None:
+                    bands_objects[bandname] = "no bio to display"
+            except:#because it can also error
                 print bandname + " does not exist as a band. Saving to cache anyways"
-                bands_objects[bandname] = ""
+                bands_objects[bandname] = "None"
+                print bands_objects[bandname]
+                print "from not network"
                 
             b = Band(name = bandname, bio = bands_objects[bandname], last_updated = datetime.datetime.now())
             b.save()#save them to the cache
@@ -260,7 +291,10 @@ def get_bands(request):
             print band#because I can
             bands_objects[bandname] = band[0].bio#because there should be only one band
             if (datetime.datetime.now() - band[0].last_updated).days > 0:#if the information is old
-                bio = network.get_artist(bandname).get_bio_summary()#get new information
+                try:
+                    bio = network.get_artist(bandname).get_bio_summary()#get new information
+                except:
+                    bio = "Could not find artist"
                 band[0].bio = bio
                 band[0].last_updated = datetime.datetime.now()
                 band[0].save()
@@ -269,7 +303,7 @@ def get_bands(request):
 
 
 def info(request):
-    return render_to_response('polls/info.html',{})
+    return render_to_response('polls/info.html',{},context_instance=RequestContext(request))
 
 @login_required(login_url='/polls/accounts/login/')
 def remove_all(request):
@@ -285,7 +319,7 @@ def remove_all(request):
 
 def cap_bands(listy):#works on strings
 #god damnit this doesnt work on unicode
-    listy = str(listy).split(",")
+    listy = listy.split(",")
     for i in range(0,len(listy)):
         listy[i] = string.capwords(listy[i])
     return ",".join(listy)

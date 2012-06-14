@@ -4,27 +4,50 @@
 <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}event.css" />
 <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}main.css" />
 
+    <script src="{{MEDIA_URL}}jquery-1.7.2.min.js"></script>
+    
+    <script type = "text/javascript">
+    
+    $(document).ready(function(){
+        $('#personalized').fadeTo(1,0.01);
+        $('#all').fadeTo(1,0.01);
+        $('#personalized').fadeTo(1000,.8, function(){   
+            $('#all').fadeTo(1000,.8);
+        });
+    });
+    
+    </script>
+
+
+
 <div class = "cluster">
 <br/>
-{% if events %}
-    <div class = "info" id = "personalized">
+<div class = "info" id = "personalized">
     <p>your personalized events:</p>
+{% if events %}
+    
     <ol>
-    {% for artists,title in events %}
-        <li>"{{title}}" featuring {{ artists }}</li>
+    {% for artists,venue,starttime in events %}
+        <li>"{{venue}}" is featuring {{ artists }} on {{starttime}}</li>
     {% endfor %}
     </ol>
-    </div>
-{% endif %}
+{% else %}
+<p>I'm sorry, you have no personalized events</p>
+
+</div>
 
 <br/>
 
 {% if all_events %}
     <div class = "info" id = "all">
+    {%if place%}
+    <p>all events for {{place}}:</p>
+    {%else%}
     <p>all events:</p>
+    {%endif%}
     <ol>
-    {% for artists,title in all_events %}
-        <li>"{{title}}" featuring {{ artists }}</li>
+    {% for artists,venue,starttime in all_events %}
+        <li>"{{venue}}" is featuring {{ artists }} on {{starttime}}</li>
     {% endfor %}
     </ol>
     </div>
@@ -33,7 +56,7 @@
 
 <div class = "error" id = "search">
 <p>care to search another place?</p>
-<form action="/event/" method="post" id="event">
+<form action="/event/html/" method="post" id="event">
 {% csrf_token %}
     <p>location:</p>
     <input type="text" name="place" id="place" /><br/>   
